@@ -1,15 +1,3 @@
-CREATE DATABASE PROJE2016
-
-USE PROJE2016
-
-
-/*
-
-Nome e RA dos integrantes do grupo:
-
-Bruno Sampaio          RA: 140004
-Christian Sanches dos Santos          RA: 140203
-Everson Nascimento          RA: 152940 
 
 */
 
@@ -67,7 +55,7 @@ PossuiDesconto varchar(2) not null
 )
 
 
-/*Cria a tabela MatrÌcula*/
+/*Cria a tabela Matr√≠cula*/
 Create table matricula
 (
 Nota numeric(18,2) not null,
@@ -75,14 +63,14 @@ DataMatricula datetime not null
 )
 
 
-/*Cria a tabela FrequÍncia*/
+/*Cria a tabela Frequ√™ncia*/
 Create table frequencia
 (
-FrequÍncia varchar(2) not null,
+Frequ√™ncia varchar(2) not null,
 DataAula Datetime not null
 )
 
---Comandos para apagar as tabelas inteiramente se necess·rio
+--Comandos para apagar as tabelas inteiramente se necess√°rio
 drop table escola
 drop table cursoidioma
 drop table turma
@@ -115,31 +103,31 @@ select * from matricula
 select * from frequencia
 
 
-/*Adiciona a coluna CodEscola na tabela escola como chave prim·ria*/
+/*Adiciona a coluna CodEscola na tabela escola como chave prim√°ria*/
 alter table escola ADD CodEscola numeric(18,0) identity primary key
 
 
-/*Adiciona a coluna CodCurso como chave prim·ria e a coluna CodEscola como chave estrangeira da tabela escola na tabela cursoidioma*/
+/*Adiciona a coluna CodCurso como chave prim√°ria e a coluna CodEscola como chave estrangeira da tabela escola na tabela cursoidioma*/
 alter table cursoidioma add CodCurso numeric(18,0) identity primary key
 alter table cursoidioma add CodEscola numeric(18,0) references escola(CodEscola)
 
 
-/*Adiciona a coluna CodTurma como chave prim·ria e a coluna CodCurso como chave estrangeira da tabela cursoidioma na tabela turma*/
+/*Adiciona a coluna CodTurma como chave prim√°ria e a coluna CodCurso como chave estrangeira da tabela cursoidioma na tabela turma*/
 alter table turma add CodTurma numeric(18,0) identity primary key
 alter table turma add CodCurso numeric(18,0) references cursoidioma(CodCurso)
 
 
-/*Adiciona a coluna CodAluno como chave prim·ria e a coluna CodTurma como chave estrangeira da tabela turma na tabela aluno*/
+/*Adiciona a coluna CodAluno como chave prim√°ria e a coluna CodTurma como chave estrangeira da tabela turma na tabela aluno*/
 alter table aluno add CodAluno numeric(18,0) identity primary key
 alter table aluno add Idade int
 
-/*Adiciona a coluna CodTurma e a Coluna CodAluno comom chaves Prim·rias da tabela turma e aluno respectivamente natabela matricula*/
+/*Adiciona a coluna CodTurma e a Coluna CodAluno comom chaves Prim√°rias da tabela turma e aluno respectivamente natabela matricula*/
 alter table matricula add CodTurma numeric(18,0) not null references turma(CodTurma)
 alter table matricula add CodAluno numeric(18,0) not null references aluno(CodAluno)
 alter table matricula add CONSTRAINT PKCodTurma Primary Key (CodTurma, CodAluno)
 
 
-/*Adicina na tabela frequencia a Coluna DataAula,TurmaID e AlunoID como identificadores(Chave prim·ria) e AlunoID,TurmaID tambÈm s„o chaves estrangeiras*/
+/*Adicina na tabela frequencia a Coluna DataAula,TurmaID e AlunoID como identificadores(Chave prim√°ria) e AlunoID,TurmaID tamb√©m s√£o chaves estrangeiras*/
 alter table frequencia add CodAluno numeric(18,0) not null references aluno(CodAluno)
 alter table frequencia add CodTurma numeric(18,0) not null references turma(CodTurma)
 alter table frequencia add CONSTRAINT PKCodFrequencia Primary Key (CodAluno, CodTurma, DataAula)
@@ -148,10 +136,10 @@ alter table frequencia add CONSTRAINT PKCodFrequencia Primary Key (CodAluno, Cod
 
 /*Insere dados na tabela escola*/
 insert into escola values('Facens', 'Sorocaba', 'SP','5245747896','Alto Boa Vista','facens@facens.br',325448796,'45786910237','Sorocaba','2015-04-02'),
-						 ('Uniso', 'S„o Paulo','SP','5245767896','Alto','uniso@uniso.br',325648796,'45786910237','Sorocaba','2014-09-02'),
+						 ('Uniso', 'S√£o Paulo','SP','5245767896','Alto','uniso@uniso.br',325648796,'45786910237','Sorocaba','2014-09-02'),
 						 ('Fatec', 'Sorocaba', 'SP','5245787896','Boa Vista','fatec@fatec.br',329448796,'45786910237','Sorocaba','2005-07-02'),
 						 ('Unip', 'Osasco','SP','5245747996','Vista','unip@unip.br',325408796,'45786910237','Sorocaba','2015-04-01'),
-						 ('Anhanguera', 'JundiaÌ', 'SP','5240747896','A Boa Vista','anhanguera@a.br',325448196,'45786910237','Sorocaba','2012-06-02')
+						 ('Anhanguera', 'Jundia√≠', 'SP','5240747896','A Boa Vista','anhanguera@a.br',325448196,'45786910237','Sorocaba','2012-06-02')
 						 
 
 /*Insere dados na tabela cursoidioma*/
@@ -161,11 +149,11 @@ insert into cursoidioma values('Ingles',1,1,120.20,1),
 							  ('Mandarim',4,40,1200.40,4),
 							  ('Espanhol',5,40,621.12,5)
 /*Insere dados na tabela turma*/
-insert into turma values('Manha','B·sico','2014-08-09','2014-12-09', 1),
-				        ('Tarde','Intermedi·rio','2014-08-07','2015-01-07', 2),
-				        ('Tarde','B·sico','2014-05-09','2015-03-09', 3),
-				        ('Noite','B·sico','2011-08-10','2012-05-10', 4),
-				        ('Manha','AvanÁado','2013-08-09','2013-09-09', 5)
+insert into turma values('Manha','B√°sico','2014-08-09','2014-12-09', 1),
+				        ('Tarde','Intermedi√°rio','2014-08-07','2015-01-07', 2),
+				        ('Tarde','B√°sico','2014-05-09','2015-03-09', 3),
+				        ('Noite','B√°sico','2011-08-10','2012-05-10', 4),
+				        ('Manha','Avan√ßado','2013-08-09','2013-09-09', 5)
 
 
 /*Insere dados na tabela aluno*/
@@ -194,21 +182,21 @@ insert into frequencia values('p','2015-01-01',1,1),
 
 													/* ##### A - Subconsultas ##### */
 	--PROBLEMA
-/*1. DÍ exemplo de um comando utilizando subconsultas que utilize o operador = ou <,>, <= etc. */
+/*1. D√™ exemplo de um comando utilizando subconsultas que utilize o operador = ou <,>, <= etc. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
-/* O comando abaixo Seleciona a coluna NOTA da tabela matrÌcula em que os valores do campo NOTA forem maiores que 7 */
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
+/* O comando abaixo Seleciona a coluna NOTA da tabela matr√≠cula em que os valores do campo NOTA forem maiores que 7 */
 Select Nota From matricula where Nota > 7
 
 
 
 	--PROBLEMA
-/* 2. DÍ exemplo de um comando utilizando subconsultas que utilize o operador in. */
+/* 2. D√™ exemplo de um comando utilizando subconsultas que utilize o operador in. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
-/* O comando abaixo utiliza a consulta mais interna (subconsulta, entre parenteses apÛs o in) para selecionar a coluna CodCurso apÛs a junÁ„o das trÍs tabelas.
-ApÛs essa subconsulta ser feita a consulta mais externa (a que est· antes do in) utiliza os dados retornados pela subconsulta para comparar se os valores do campo CodCurso
-da tabela cursoidioma est„o ou s„o iguais aos valores que foram selecionados pela subconsulta. Se sim, È selecionado o valor da coluna DuraÁ„o da tabela
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
+/* O comando abaixo utiliza a consulta mais interna (subconsulta, entre parenteses ap√≥s o in) para selecionar a coluna CodCurso ap√≥s a jun√ß√£o das tr√™s tabelas.
+Ap√≥s essa subconsulta ser feita a consulta mais externa (a que est√° antes do in) utiliza os dados retornados pela subconsulta para comparar se os valores do campo CodCurso
+da tabela cursoidioma est√£o ou s√£o iguais aos valores que foram selecionados pela subconsulta. Se sim, √© selecionado o valor da coluna Dura√ß√£o da tabela
 cursoidioma e mostrado na tela.
 */
 Select Duracao from cursoidioma where CodCurso in ( Select t.CodCurso from turma t inner join matricula m
@@ -216,92 +204,92 @@ Select Duracao from cursoidioma where CodCurso in ( Select t.CodCurso from turma
 																				t.CodTurma = m.CodTurma
 																				inner join frequencia f 
 																				on
-																				f.CodTurma = t.CodTurma and f.FrequÍncia = 'p'
+																				f.CodTurma = t.CodTurma and f.Frequ√™ncia = 'p'
 																				)
 
 	--PROBLEMA
-/*3. DÍ exemplo de um comando utilizando subconsultas que utilize o operador not in.*/
+/*3. D√™ exemplo de um comando utilizando subconsultas que utilize o operador not in.*/
 
---DESCRI«√O DO QUE O COMANDO FAZ
-/* O comando abaixo seleciona o conte˙do do campo CodEscola, Nome, Cidade da tabela escola onde o conte˙do do campo Cidade da tabela escola n„o esteja
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
+/* O comando abaixo seleciona o conte√∫do do campo CodEscola, Nome, Cidade da tabela escola onde o conte√∫do do campo Cidade da tabela escola n√£o esteja
 cadastrado na tabela aluno
 */
 
 select CodEscola, Nome, Cidade from escola where Cidade not in (select Cidade from aluno)
 
---os selects abaixo server para simples conferÍncia
+--os selects abaixo server para simples confer√™ncia
 select * from escola
 select * from aluno
 
 
 	--PROBLEMA
-/* 4. DÍ exemplo de um comando utilizando subconsultas que utilize o operador exists */
+/* 4. D√™ exemplo de um comando utilizando subconsultas que utilize o operador exists */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 /* O comando abaixo faz o seguinte:
-Basta uma condiÁ„o ser verdadeira na subconsulta que ele seleciona todos os valores da coluna NÌvel da tabela turma.
+Basta uma condi√ß√£o ser verdadeira na subconsulta que ele seleciona todos os valores da coluna N√≠vel da tabela turma.
 
-Para comprovar essa explicaÁ„o, o mesmo comando foi refeito, agora ele ser· igual a apenas a um valor t.CodCurso = 4..
-Agora, se for falsa ou seja se a subconsulta n„o selecionar nenhuma linha (Numero de linhas = 0) a consulta externa n„o È executada.
+Para comprovar essa explica√ß√£o, o mesmo comando foi refeito, agora ele ser√° igual a apenas a um valor t.CodCurso = 4..
+Agora, se for falsa ou seja se a subconsulta n√£o selecionar nenhuma linha (Numero de linhas = 0) a consulta externa n√£o √© executada.
 
  */
 
-select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = c.CodCurso) --˙nico comando v·lido, os demais foi apenas para exemplificaÁ„o do que o comando faz
+select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = c.CodCurso) --√∫nico comando v√°lido, os demais foi apenas para exemplifica√ß√£o do que o comando faz
 
-select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = 4) --Comando v·lido, ter· o mesmo efeito do comando acima
+select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = 4) --Comando v√°lido, ter√° o mesmo efeito do comando acima
 
-select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = -10) --CondiÁ„o falsa, a consulta externa n„o chega a ser executada
+select Nivel from turma where EXISTS ( select * from cursoidioma c inner join turma t on  t.CodCurso = -10) --Condi√ß√£o falsa, a consulta externa n√£o chega a ser executada
 
 	--PROBLEMA
-/* 5. DÍ exemplo de um comando utilizando subconsultas que utilize o operador not  exists. */
+/* 5. D√™ exemplo de um comando utilizando subconsultas que utilize o operador not  exists. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 /* o comando abaixo faz o seguinte:
-Ele È o oposto do comando EXISTS, pois basta que uma condiÁ„o seja falsa para ele trazer todos os campos selecionados na colsulta externa.
-Assim como no problema 4, foi colocado alguns exemplos para auxiliar na explicaÁ„o.
+Ele √© o oposto do comando EXISTS, pois basta que uma condi√ß√£o seja falsa para ele trazer todos os campos selecionados na colsulta externa.
+Assim como no problema 4, foi colocado alguns exemplos para auxiliar na explica√ß√£o.
 
 */
-select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = -90) -- ˙nico comando v·lido, os demais foi apenas para exemplificaÁ„o do que o comando faz
+select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = -90) -- √∫nico comando v√°lido, os demais foi apenas para exemplifica√ß√£o do que o comando faz
 
-select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = c.CodCurso) --CondiÁ„o verdadeira, a consulta externa n„o chega a ser executada
+select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = c.CodCurso) --Condi√ß√£o verdadeira, a consulta externa n√£o chega a ser executada
 
-select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = 1) --CondiÁ„o verdadeira, a consulta externa n„o chega a ser executada
+select Nivel from turma where NOT EXISTS( select * from cursoidioma c inner join turma t on  t.CodCurso = 1) --Condi√ß√£o verdadeira, a consulta externa n√£o chega a ser executada
 
 
 
 	--PROBLEMA
-/* 6. DÍ exemplo de uma subconsulta utilizada dentro de um comando Update. */
+/* 6. D√™ exemplo de uma subconsulta utilizada dentro de um comando Update. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
-/* O comando abaixo na condiÁ„o where utiliza uma subconsulta a qual tem a finalidade de selecionar a menor NOTA da tabela matrÌcula e compara com o campo NOTA da
-mesma tabela (matrÌcula) se a condiÁ„o for satisfeita, isto È, se for verdadeira, ent„o o campo Nota È atualizado (UPDATE) com um aumento de 10% no valor atual desse campo.
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
+/* O comando abaixo na condi√ß√£o where utiliza uma subconsulta a qual tem a finalidade de selecionar a menor NOTA da tabela matr√≠cula e compara com o campo NOTA da
+mesma tabela (matr√≠cula) se a condi√ß√£o for satisfeita, isto √©, se for verdadeira, ent√£o o campo Nota √© atualizado (UPDATE) com um aumento de 10% no valor atual desse campo.
 */
 
---seleciona toda a informaÁ„o da tabela matricula antes que o comando abaixo seja executado
+--seleciona toda a informa√ß√£o da tabela matricula antes que o comando abaixo seja executado
 select * from matricula
 
 update matricula set Nota = Nota * 1.1 where  Nota = (select min(Nota) from matricula)
 
---seleciona a tabela matricula apÛs o comando acima para verificar o efeito do comando
+--seleciona a tabela matricula ap√≥s o comando acima para verificar o efeito do comando
 select * from matricula
 
 
 
 	--PROBLEMA
-/* 7. DÍ exemplo de uma subconsulta utilizada dentro de um comando Delete. */
+/* 7. D√™ exemplo de uma subconsulta utilizada dentro de um comando Delete. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
-/* O comando abaixo seleciona a Data de MatrÌcula mais recente da tabela matricula.
-Compara com com cada campo DataMatricula da mesma tabela (matrÌcula), se a condiÁ„o da comparaÁ„o for stisfeita, isto È, se for verdadeira, a linha inteira que contÈm essa
-informaÁ„o È deletada da tabela.
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
+/* O comando abaixo seleciona a Data de Matr√≠cula mais recente da tabela matricula.
+Compara com com cada campo DataMatricula da mesma tabela (matr√≠cula), se a condi√ß√£o da compara√ß√£o for stisfeita, isto √©, se for verdadeira, a linha inteira que cont√©m essa
+informa√ß√£o √© deletada da tabela.
 */
 
---seleciona toda a informaÁ„o da tabela matrÌcula antes do comando abaixo seja executado
+--seleciona toda a informa√ß√£o da tabela matr√≠cula antes do comando abaixo seja executado
 select * from matricula
 
 delete from matricula where DataMatricula = (select max(DataMatricula) from matricula)
 
---seleciona a tabela matrÌcula apos o comando acima para verificar o efeito do comando
+--seleciona a tabela matr√≠cula apos o comando acima para verificar o efeito do comando
 select * from matricula
 
 
@@ -310,13 +298,13 @@ select * from matricula
 
 
 	--PROBLEMA
-/* 8. Escreva uma funÁ„o que seja ˙til para a lÛgica de negÛcios de seu sistema e indique o contexto de sua utilizaÁ„o. */
+/* 8. Escreva uma fun√ß√£o que seja √∫til para a l√≥gica de neg√≥cios de seu sistema e indique o contexto de sua utiliza√ß√£o. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 
 /*	----- 
-Esse metodo de negocio È usado function table que retorna o nome dos alunos na consulta mais externa, e na consulta mas interna ( subcosulta) retorna
-a nota do aluno e a nota que for maior ou igual a passada por par‚metro ganhar· uma viagem para o pais de origem do curso de lingua em que se est· 
+Esse metodo de negocio √© usado function table que retorna o nome dos alunos na consulta mais externa, e na consulta mas interna ( subcosulta) retorna
+a nota do aluno e a nota que for maior ou igual a passada por par√¢metro ganhar√° uma viagem para o pais de origem do curso de lingua em que se est√° 
 matriculado.
 
 Obs.: Pode haver mais de um ganhador, podendo inclusive todos os alunos ganhar a viagem. 
@@ -342,22 +330,22 @@ AS
 
 							WHERE m.Nota >= @nota))
 
---seleciona todos os dados da tabela matricula para que possa ver a nota e utilizar na funÁ„o
+--seleciona todos os dados da tabela matricula para que possa ver a nota e utilizar na fun√ß√£o
 select * from matricula
 
 SELECT * FROM DBO.fnReturnMelhorAluno(7.3)
 							
 
 	--PROBLEMA
-/* 9. Escreva uma Stored Procedure que implemente uma regra de negÛcio de sua aplicaÁ„o.Explique qual È e o porque desta regra ser implementada no SGBD. */
+/* 9. Escreva uma Stored Procedure que implemente uma regra de neg√≥cio de sua aplica√ß√£o.Explique qual √© e o porque desta regra ser implementada no SGBD. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 
-/* O comando pega o nome do aluno matriculado na escola e sua idade, aquele cujo a idade È maior ou igual a 40 tem um desconto
-na mensalidade para incentivar pessoas a estudarem outro idioma.O desconto ser· de 45%.
+/* O comando pega o nome do aluno matriculado na escola e sua idade, aquele cujo a idade √© maior ou igual a 40 tem um desconto
+na mensalidade para incentivar pessoas a estudarem outro idioma.O desconto ser√° de 45%.
 
-Esta regra foi implementado no SGBD para facilitar as tarefas internas que ser„o realizadas pelos funcion·rios da escola e tambÈm para dar seguranÁa a informaÁ„o,
-n„o podendo o aluno que j· recebeu desconto mentir e isso vale para aqueles que tambÈm n„o atendem o requisito necess·rio para receber o desconto que È a idade.
+Esta regra foi implementado no SGBD para facilitar as tarefas internas que ser√£o realizadas pelos funcion√°rios da escola e tamb√©m para dar seguran√ßa a informa√ß√£o,
+n√£o podendo o aluno que j√° recebeu desconto mentir e isso vale para aqueles que tamb√©m n√£o atendem o requisito necess√°rio para receber o desconto que √© a idade.
 
  */
 
@@ -379,7 +367,7 @@ BEGIN
 
 		IF (@Idade >= 40 and ((select PossuiDesconto from aluno where CodAluno = @Idaluno) = 'N' or (select PossuiDesconto from aluno where CodAluno = @Idaluno) = 'n'))
 		BEGIN
-				print @ret + ' Recebe desconto para alunos com idade maior ou igual a 40. O valor de Desconto recebido na mensalidade È de 45%'
+				print @ret + ' Recebe desconto para alunos com idade maior ou igual a 40. O valor de Desconto recebido na mensalidade √© de 45%'
 				update cursoidioma set ValorMensalidade = ValorMensalidade * 0.55 where CodCurso in (Select ci.CodCurso from 
 																										aluno a inner join matricula m
 																										on
@@ -398,7 +386,7 @@ BEGIN
 
 		ELSE
 			BEGIN
-					print @ret +' n„o recebe desconto. Por n„o ter idade compativel ou por j· possuir desconto.'
+					print @ret +' n√£o recebe desconto. Por n√£o ter idade compativel ou por j√° possuir desconto.'
 			END
 END
 
@@ -408,15 +396,15 @@ exec spImpleNegocio 4
 
 select * from aluno
 select * from cursoidioma
-/* 10. De acordo com o tema escolhido, escreva um procedimento armazenado (Stored Procedure)  para calcular totalizaÁıes do sistema. Esta totalizaÁ„o deve ser exibida como resultado do procedimento ou gravada em alguma tabela.
+/* 10. De acordo com o tema escolhido, escreva um procedimento armazenado (Stored Procedure)  para calcular totaliza√ß√µes do sistema. Esta totaliza√ß√£o deve ser exibida como resultado do procedimento ou gravada em alguma tabela.
 	Exemplo:
-Valor total da locaÁ„o de automÛvel (di·rias + seguro + danos, se houver) => para  tema da Locadora de veÌculos
-Total de freq¸Íncia do aluno no curso => calculado a partir do registro di·rio de frequÍncia do aluno no curso => para tema da Escola de Idiomas */
+Valor total da loca√ß√£o de autom√≥vel (di√°rias + seguro + danos, se houver) => para  tema da Locadora de ve√≠culos
+Total de freq√º√™ncia do aluno no curso => calculado a partir do registro di√°rio de frequ√™ncia do aluno no curso => para tema da Escola de Idiomas */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 
-/* O comando abaixo recebe o cÛdigo do aluno como par‚metro, baseado nisso mostra quantas aulas (total) o aluno teve atÈ
-o momento da consulta e verifica quantas faltas e presenÁa o mesmo possuÌ em relaÁ„o ao total de aulas*/
+/* O comando abaixo recebe o c√≥digo do aluno como par√¢metro, baseado nisso mostra quantas aulas (total) o aluno teve at√©
+o momento da consulta e verifica quantas faltas e presen√ßa o mesmo possu√≠ em rela√ß√£o ao total de aulas*/
 
 SELECT * from frequencia
 --comando utilizado para ver o efeito da procedure
@@ -438,7 +426,7 @@ begin
 declare @Frequencia varchar(2), @CodAluno2 numeric(18,0)
 		declare curp cursor
 		for
-		select FrequÍncia, CodAluno from frequencia
+		select Frequ√™ncia, CodAluno from frequencia
 		
 		open curp
 
@@ -472,7 +460,7 @@ declare @Frequencia varchar(2), @CodAluno2 numeric(18,0)
 
 		close curp
 		deallocate curp
-print'Total de Aulas que o aluno teve atÈ agora:'
+print'Total de Aulas que o aluno teve at√© agora:'
 print +@soma
 print 'Quantidade de Presenca: '
 print  @contador
@@ -487,22 +475,22 @@ select * from frequencia
 Exec spcalcula 4
 
 	--PROBLEMA
-/* 11. Escreva um trigger para suportar auditoria quanto ‡ exclus„o, alteraÁ„o e inclus„o de registros da seguinte forma:
+/* 11. Escreva um trigger para suportar auditoria quanto √† exclus√£o, altera√ß√£o e inclus√£o de registros da seguinte forma:
 
-Toda vez que um registro for incluÌdo, excluÌdo ou alterado da tabela principal de seu sistema, o trigger dever· gravar uma tabela de log com: 
-Para exclus„o: data e hora da operaÁ„o, chave do registro excluÌdo, nome da tabela e o usu·rio que disparou a exclus„o.
-Para inclus„o: data e hora da operaÁ„o, chave do registro incluÌdo, nome da tabela e o usu·rio que disparou a inclus„o.
-Para alteraÁ„o: data e hora da operaÁ„o, chave do registro alterado, nome da tabela e o usu·rio que disparou a alteraÁ„o, valor anterior e atual do campo alterado. */
+Toda vez que um registro for inclu√≠do, exclu√≠do ou alterado da tabela principal de seu sistema, o trigger dever√° gravar uma tabela de log com: 
+Para exclus√£o: data e hora da opera√ß√£o, chave do registro exclu√≠do, nome da tabela e o usu√°rio que disparou a exclus√£o.
+Para inclus√£o: data e hora da opera√ß√£o, chave do registro inclu√≠do, nome da tabela e o usu√°rio que disparou a inclus√£o.
+Para altera√ß√£o: data e hora da opera√ß√£o, chave do registro alterado, nome da tabela e o usu√°rio que disparou a altera√ß√£o, valor anterior e atual do campo alterado. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 
--- Criar tabela Logs que ir· conter o histÛrico das alteraÁıes
+-- Criar tabela Logs que ir√° conter o hist√≥rico das altera√ß√µes
 
 create table Logs
 (
 LogID			int	identity not null,
-TipoAlteraÁ„o	varchar(255) not null,
-DataAlteraÁ„o	datetime not null,
+TipoAltera√ß√£o	varchar(255) not null,
+DataAltera√ß√£o	datetime not null,
 TabelaAlterada	varchar(255)not null,
 ChaveRegisro	varchar (255)not null,
 Usuario			varchar(255)not null,
@@ -529,16 +517,16 @@ insert into Usuario values
 
 select *from usuario
 
---O Codigo cria a Trigger para fazer o Log das informaÁıes na tabela "Logs" apÛs alguma linha da tabela Escola (Tabela Principal) ser deletada.
---ApÛs a exclusÁaı, a trigger declara uma variavel que representa o usuario logado que deletou o dado, e faz o adiciona a informaÁ„o na tabela Logs.
---Dar· um erro devido as depemdencias com outras tabelas, tentamos deletar as linhas das tabelas afetadas mas deixamos como comentario na Trigger 
+--O Codigo cria a Trigger para fazer o Log das informa√ß√µes na tabela "Logs" ap√≥s alguma linha da tabela Escola (Tabela Principal) ser deletada.
+--Ap√≥s a exclus√ßa√µ, a trigger declara uma variavel que representa o usuario logado que deletou o dado, e faz o adiciona a informa√ß√£o na tabela Logs.
+--Dar√° um erro devido as depemdencias com outras tabelas, tentamos deletar as linhas das tabelas afetadas mas deixamos como comentario na Trigger 
 
 create trigger trAuditoriaI on Escola
 after delete
 as
 	begin
 		declare @UsuarioLogado int
-		set @UsuarioLogado=4 --O usuario logado È de CodUsuario igual a 4 (Amanda)
+		set @UsuarioLogado=4 --O usuario logado √© de CodUsuario igual a 4 (Amanda)
 
 			--delete from matricula where codturma =4
 			--delete from frequencia where codturma=4
@@ -546,7 +534,7 @@ as
 			--delete from cursoidioma where CodEscola = 4 --(select codescola from deleted)
 		
 		insert into Logs values
-		('Exclus„o',getdate(),'Escola',(select CodEscola from deleted),(select Nome from usuario where codusuario=@UsuarioLogado),'-','-')
+		('Exclus√£o',getdate(),'Escola',(select CodEscola from deleted),(select Nome from usuario where codusuario=@UsuarioLogado),'-','-')
 	End
 
 --Validando trigger deletando uma linha da tabela escola
@@ -559,17 +547,17 @@ select*from escola
 select*from logs
 
 
--- ApÛs uma adiÁ„o de dado feito na tabela Escola, o codigo abaixo simula um usuario logado declarando um variavel, e insere o acrecimo feito na tabela log.
+-- Ap√≥s uma adi√ß√£o de dado feito na tabela Escola, o codigo abaixo simula um usuario logado declarando um variavel, e insere o acrecimo feito na tabela log.
 
 create trigger trAuditoriaII on escola
 after insert
 as
 	begin
 		declare @UsuarioLogado int
-		set @UsuarioLogado=5 --O usuario logado È de CodUsuario igual a 5 (Milena)
+		set @UsuarioLogado=5 --O usuario logado √© de CodUsuario igual a 5 (Milena)
 
 		insert into logs values
-		('Inclus„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario=5),'-','-')
+		('Inclus√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario=5),'-','-')
 
 	end
 
@@ -581,7 +569,7 @@ insert into escola values
 select*from escola
 select*from Logs
 
--- Essa trigger È acionada apÛs alguma atualizaÁ„o na tabela escola, ela simula um usuario do sistema e adiciona o valor alterado (antigo) e o novo valor, na tabela Logs.
+-- Essa trigger √© acionada ap√≥s alguma atualiza√ß√£o na tabela escola, ela simula um usuario do sistema e adiciona o valor alterado (antigo) e o novo valor, na tabela Logs.
 -- O codigo checa coluna a coluna para poder registrar o valor correto na tabela Logs.
 
 create trigger trAuditoriaIII on escola
@@ -589,63 +577,63 @@ after update
 as
 begin
 	declare @UsuarioLogado int
-	set @UsuarioLogado=3 --O usuario logado È de CodUsuario igual a 3 (Thomas)
+	set @UsuarioLogado=3 --O usuario logado √© de CodUsuario igual a 3 (Thomas)
 
 	if update (nome)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Nome from deleted),(select Nome from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Nome from deleted),(select Nome from inserted))
 		end	
 	else if update (Cidade)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Cidade from deleted),(select Cidade from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Cidade from deleted),(select Cidade from inserted))
 		end
 	else if update (Estado)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Estado from deleted),(select Estado from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Estado from deleted),(select Estado from inserted))
 		end
 	else if update (CEP)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select CEP from deleted),(select CEP from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select CEP from deleted),(select CEP from inserted))
 		end
 	else if update (Bairro)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Bairro from deleted),(select Bairro from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Bairro from deleted),(select Bairro from inserted))
 		end
 	else if update (Email)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Email from deleted),(select Email from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Email from deleted),(select Email from inserted))
 		end
 	else if update (Telefone)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Telefone from deleted),(select Telefone from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Telefone from deleted),(select Telefone from inserted))
 		end
 	else if update (CNPJ)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select CNPJ from deleted),(select CNPJ from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select CNPJ from deleted),(select CNPJ from inserted))
 		end
 	else if update (Endereco)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Endereco from deleted),(select Endereco from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select Endereco from deleted),(select Endereco from inserted))
 		end
 	else if update (DataCadastro)
 		begin
 			insert into Logs values
-			('AlteraÁ„o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select DataCadastro from deleted),(select DataCadastro from inserted))
+			('Altera√ß√£o',getdate(),'Escola',(select CodEscola from inserted),(select Nome from Usuario where CodUsuario = @UsuarioLogado),(select DataCadastro from deleted),(select DataCadastro from inserted))
 		end
 
 		Select * From Logs
 end
 
--- Validando alteraÁ„o na tabela Logs ao atualizar algum dado da tabela escola.
+-- Validando altera√ß√£o na tabela Logs ao atualizar algum dado da tabela escola.
 
 update escola set Cidade = 'Pato Brmco' where nome ='uniso'
 update escola set Estado = 'PR' where nome ='uniso'
@@ -659,18 +647,18 @@ delete from Logs where logid=2
 
 
 	--PROBLEMA
-/* 12. De acordo com o tema  escolhido, escreva um trigger para realizar uma aÁ„o autom·tica que seja  necess·ria para o  sistema manter a  integridade dos dados.
+/* 12. De acordo com o tema  escolhido, escreva um trigger para realizar uma a√ß√£o autom√°tica que seja  necess√°ria para o  sistema manter a  integridade dos dados.
 		Exemplo:
-Cada vez que for inserida a matrÌcula de um aluno no curso, diminuir o n˙mero de vagas disponÌveis no curso =>  para tema da Escola de Idiomas
-Cada vez que uma locaÁ„o for encerrada, calcular o total de pontos de fidelidade =>  para tema da  Locadora de veÌculos
-Atualizar o saldo banc·rio cada vez que ocorrer um lanÁamento de dÈbito ou crÈdito=> para o Tema de Contas correntes banc·rias.
+Cada vez que for inserida a matr√≠cula de um aluno no curso, diminuir o n√∫mero de vagas dispon√≠veis no curso =>  para tema da Escola de Idiomas
+Cada vez que uma loca√ß√£o for encerrada, calcular o total de pontos de fidelidade =>  para tema da  Locadora de ve√≠culos
+Atualizar o saldo banc√°rio cada vez que ocorrer um lan√ßamento de d√©bito ou cr√©dito=> para o Tema de Contas correntes banc√°rias.
 Etc. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 
 /* o comando abaixo faz o seguinte:
-					Cada vez que for inserida a matrÌcula de um aluno no curso, È subtraÌdo em um o n˙mero de vagas atualmente disponÌveis no curso.
-O comando n„o È executado se a quantidade de vagas disponÌvel for 0 ou menor que 0, pois aÌ o curso estaria com a turma completa.
+					Cada vez que for inserida a matr√≠cula de um aluno no curso, √© subtra√≠do em um o n√∫mero de vagas atualmente dispon√≠veis no curso.
+O comando n√£o √© executado se a quantidade de vagas dispon√≠vel for 0 ou menor que 0, pois a√≠ o curso estaria com a turma completa.
 
 */
 
@@ -706,7 +694,7 @@ end
 else
 begin
 
-raiserror('O curso escolhido nao possui mais vagas disponÌveis, a turma atual est· completa!', 13,1,1)
+raiserror('O curso escolhido nao possui mais vagas dispon√≠veis, a turma atual est√° completa!', 13,1,1)
 
 end
 
@@ -716,7 +704,7 @@ end
 
 --O comandos Abaixo servem Apenas para testar o trigger acima
 
-insert into turma values('Manha','B·sico','2014-08-09','2014-12-09', 1)
+insert into turma values('Manha','B√°sico','2014-08-09','2014-12-09', 1)
 insert into aluno values('Bruno','Sorocaba','Rua 1','Boa Vista','SP','654646484','457879965214','bruno@nois.com','32554878','1996-02-02','2014-02-02','n',29)
 insert into matricula values(7.2,'2015-04-03',9,6)
 
@@ -728,12 +716,12 @@ select * from cursoidioma
 
 
 	--PROBLEMA
-/* 13. Escreva um procedimento que necessite da utilizaÁ„o de cursores.
-Lembre-se o uso de cursores È interessante quando precisamos trabalhar com um conjunto de linhas e tratando cada linha de maneira individual. */
+/* 13. Escreva um procedimento que necessite da utiliza√ß√£o de cursores.
+Lembre-se o uso de cursores √© interessante quando precisamos trabalhar com um conjunto de linhas e tratando cada linha de maneira individual. */
 
---DESCRI«√O DO QUE O COMANDO FAZ
+--DESCRI√á√ÉO DO QUE O COMANDO FAZ
 /* O comando abaixo seleciona alguns campos da tabela aluno como Nome do Aluno, Cidade, Endereco e Telefone
-e nos mostra com a numeraÁ„o acima de todas essas informaÁıes para f·cil verificaÁ„o de quantos alunos existem na tabela.
+e nos mostra com a numera√ß√£o acima de todas essas informa√ß√µes para f√°cil verifica√ß√£o de quantos alunos existem na tabela.
 */
 
 create procedure prcur
